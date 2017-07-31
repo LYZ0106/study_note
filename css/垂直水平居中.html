@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /*--1-- 文本和图片: *************************************************/
+        .vertical {
+            height: 100px;
+            line-height: 100px;
+        }
+
+        /*--2--  宽度高度固定,容器绝对定位********/
+        /*缺点：无足够空间，content 会消失(类似div 在 body 内，当用户缩小浏览器窗口，滚动条不出现的情况)*/
+        #wrap {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            left: 50%;
+            margin-left: -100px;
+            top: 50%;
+            margin-top: -100px;
+        }
+
+        /* --3 -- 不知道自己高度和父容器高度, 用绝对定位行 transform*/
+        .a {
+            position: relative;
+            width: 100px;
+            background-color: #5e9620;
+        }
+
+        .b {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50px;
+            transform: translateY(-50%) translateX(-50%);
+            background-color: #962283;
+        }
+
+        /*--4-- div模拟表格: ***************************************************/
+        .a {
+            height: 300px;
+            display: table; /*表格形式渲染*/
+        }
+
+        .b {
+            display: table-cell; /*表格的单元素格形式渲染*/
+            vertical-align: middle;
+        }
+
+        /*--5-- display:inline-block，然后借助另一个元素的高度来实现居中 ************/
+        #parent {
+            height: 500px;
+            border: 1px solid red;
+        }
+
+        #vertically_center,
+        #extra {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        #extra {
+            height: 100%; /*设置线盒型为父元素的100%高度*/
+        }
+
+        /*--6-- 上下一样的padding值: ****************************************/
+        #item {
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+
+        /*--7--   flexBox  ****************************************************/
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 300px;
+            background-color: #0b8bd4;
+        }
+
+        p {
+            width: 100px;
+            margin: auto;
+            background-color: #cfd453;
+        }
+
+    </style>
+</head>
+<body>
+<!-- 方法3
+<div class="a">
+    <div class="b">6543</div>
+</div>
+
+<!-- 方法5
+<div id="parent">
+    <div id="vertically_center">
+        <p>I am vertically centered!</p>
+    </div>
+    <div id="extra"></div>
+</div>
+-->
+
+<!-- 方法6
+<div style="background-color: #5e9620">
+    <div id="item">ERGE</div>
+</div>
+-->
+
+
+<div class="container">
+    <p id="p1"> A </p>
+</div>
+
+
+</body>
+</html>
