@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a>3456789</a>
+<a id="a1">a1</a>
+<a id="a2">a2</a>
+
+<script>
+  /*
+  * 单页面中： 当用户的操作修改了dom结构，用户希望可以通过浏览器的前进后返回上一步的操作，
+  * 就需要用到前端路由。
+  * */
+
+  /*******************  location.hash + hashchange事件  *********************/
+    // location.hash知道当前页面的位置(url中 # 后的内容)
+    // hashchange事件监听location.hash的变化
+  class Router {
+    constructor() {
+      this.currentUrl = '';
+      this.routes = {}
+    }
+
+    route(path, callback) { //设置地址
+      this.routes[path] = callback
+    }
+
+    refresh() {
+      this.currentUrl = location.hash.slice(1) || '/';
+      this.routes[this.currentUrl]()
+    }
+
+    init() {
+      window.addEventListener('load', this.refresh.bind(this), false)
+      window.addEventListener('hashchange', this.refresh.bind(this), false)
+    }
+  }
+
+
+  let route = new Router();
+  route.init();
+
+  function changecolor(color) {
+    let body = document.getElementsByTagName('body')[0];
+    body.style['background-color'] = color;
+  }
+
+  route.route('/', changecolor.bind(null, 'skyblue'));
+  route.route('/blue', changecolor.bind(null, 'blue'));
+  route.route('/green', changecolor.bind(null, 'green'));
+  route.route('/color', function () {
+    let p = document.getElementsByTagName('a');
+    [].forEach.call(p, function (item) {
+      item.style['color'] = '#' + ((~~(Math.random() * (1 << 24))).toString(16));
+    })
+  });
+
+
+  /*******************  history.pushState() + popState事件  *********************/
+  // 作用: 解决单页应用无法保存状态的问题
+  // 将浏览器当前的url以及一些data通过pushState进行保存
+  // 通过url的更改，可以在popstate事件中对原有元素进行还原（通过传递的data）
+
+  (function () {
+    let a1 = document.getElementById('a1');
+    let a2 = document.getElementById('a2');
+    let count1 = 0;
+    let count2 = 0;
+
+    history.replaceState({ //最开始的状态，采用replace直接替换
+        count1: count1,
+        count2: count2
+      },
+      null, ''
+    );
+
+    a1.addEventListener('click', function () { //之后的状态，需要进行保存
+      count1++;
+      history.pushState({
+          count1: count1,
+          count2: count2
+        },
+        null,
+        '#/color/s' + count1);
+      a1.innerHTML = count1;
+    })
+
+    a2.addEventListener('click', function () {
+      count2++;
+      history.pushState({count1: count1, count2: count2}, null, '#/k' + count2)
+      a2.innerHTML = count2;
+    })
+
+    window.addEventListener('popstate', function (e) { //对状态进行还原
+      console.log(e.state);
+      a1.innerHTML = 's' + e.state.count1;
+      a2.innerHTML = 'k' + e.state.count2;
+    })
+  }())
+
+</script>
+</body>
+</html>

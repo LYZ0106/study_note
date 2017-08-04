@@ -14,7 +14,8 @@
 var arr = [3, 6, 4, 1, 99, 44, 22, 5];
 
 function insertSort(arr) {
-  let preIndex, currentVal;
+  let preIndex
+  let currentVal
 
   for (let i = 1; i < arr.length; i++) {
     preIndex = i - 1;
@@ -23,8 +24,7 @@ function insertSort(arr) {
       arr[preIndex + 1] = arr[preIndex];
       preIndex--
     }
-    // 将当前值放置合适的位置
-    arr[preIndex + 1] = currentVal;
+    arr[preIndex + 1] = currentVal;     // 将当前值放置合适的位置
   }
   return arr
 }

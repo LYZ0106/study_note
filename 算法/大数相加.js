@@ -1,46 +1,25 @@
-function sumStrings(a,b) {
-  a = '0' + a;    //加0是因为两个最大的位数相加后可能需要进位
-  b = '0' + b;
+// 9007199254740991是js的'MAX_SAFE_INTEGER'
+// -9007199254740991是'MIN_SAFE_INTEGER'，
+// 实现大数相加
 
-  var arrA = a.split(''),//将数字转成字符串
-    arrB = b.split(''),
-    res = [],
-    temp = '',
-    carry = 0,
+// 原理: 从右往左遍历相加，有进位的就把左边的数加1
+function add(a, b) {
+  a = a.split('');
+  b = b.split('');
 
-    distance = a.length - b.length,  //计算两个数值字符串的长度差
-    len = distance > 0 ? a.length : b.length;
+  let carry = 0, result = '';
 
-  //在长度小的那个数值字符串前面添加distance个0，这样两个数值的位数就保持一致，
-  //如：9797979797、34646，需要将这两个数值转成['0','9','7','9','7','9','7','9','7','9','7']、['0','0','0','0','0','3','4','6','4','6']
-  if(distance > 0){
-    for(let i = 0; i < distance; i++){
-      arrB.unshift('0');
-    }
+  while (a.length || b.length || carry) { // 进位
 
-  }else{
-    for(let i = 0; i < Math.abs(distance); i++){
-      arrA.unshift('0');
-    }
+    // 位数不够补0, 同时加上上次运算进位的数 1
+    let temp = parseInt(a.pop() || 0) + parseInt(b.pop() || 0)+carry;
+    carry = Math.floor(temp / 10);
+    result = temp % 10 + result;
   }
 
-  //从数组的最后一位开始向前遍历，把两个数组对应位置的数值字符串转成整形后相加，
-  //carry表示相加后的进位，比如最后一位相加是7+6=13，这里进位carry是1
-  //在遍历的时候每次都加上上次相加后的carry进位
-  for(let i = len - 1; i >= 0; i--){
-    temp = +arrA[i] + (+arrB[i]) + carry;
-    if(temp > 10){
-      carry = 1;
-      res.push((temp + '')[1]);
-
-    }else{
-      carry = 0;
-      res.push(temp);
-    }
-
-  }
-  res = res.reverse().join('').replace(/^0/,'');
-  console.log(res)
+  return result
 }
 
-sumStrings('30000000000000000000000000','91111111111111111111111111');
+
+var ret = add('39000', '9000');
+console.log(ret)
