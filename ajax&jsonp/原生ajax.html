@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+</head>
+<body>
+<div id='myDiv'><h2>test on ajax</h2></div>
+<button id='my' type='button'>修改内容</button>
+
+<script src="ajax.js"></script>
+<script>
+  let my = document.querySelector('#my')
+  let myDiv = document.querySelector('#myDiv')
+  let mydata = {"a": "aaa"}
+
+  my.addEventListener('click', function () {
+    ajax({
+      method: 'GET',
+      url: './flex.json',
+      async: true,
+      data: {"a": "aaa"},
+      success: function (res) { // 请求成功的回调函数
+        myDiv.innerHTML = JSON.stringify(res.a)
+        console.log('ok')
+      }
+    })
+  }, false)
+</script>
+</body>
+</html>

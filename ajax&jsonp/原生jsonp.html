@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id='my' type='button'>jsonp请求</button>
+<script src="jsonp.js"></script>
+<script>
+  // 目的： 获取服务器的data
+  // 传统方案 ：ajax，但跨域限制
+  // 解决： jsonp
+
+  function getData(data) { // 参数data就是服务端通过拼接字符串返回回来的
+    alert(JSON.stringify(data))
+  }
+
+  let my = document.querySelector('#my')
+
+  my.addEventListener('click', () => {
+    let data = {
+      platform: 'h5',
+      uin: 0,
+      needNewCode: 1
+    }
+
+    let url = 'http://localhost:4097/a?jsonpCallback=getData'
+
+    jsonp(url, data)
+  }, false)
+
+</script>
+</body>
+</html>
