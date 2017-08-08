@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0
+    }
+
+    ul li {
+        display: inline-block;
+    }
+
+    .clear {
+        clear: both
+    }
+
+    .demo-nav li {
+        line-height: 40px;
+        padding: 0 10px;
+        background: #09f;
+        color: #fff;
+        position: relative;
+    }
+
+    .demo-nav li ul {
+        position: absolute;
+        left: 0;
+        top: 40px;
+        /*********** 隐藏列表 ************/
+        height: 0;
+        overflow: hidden;
+    }
+
+    .demo-nav li ul li {
+        transition: all .3s;
+        background: #f90;
+        opacity: 0;
+    }
+
+    .demo-nav li ul li:nth-of-type(1n) { /*奇数项初始往右边偏移100%*/
+        transform: translate3d(100%, 0, 0);
+    }
+
+    .demo-nav li ul li:nth-of-type(2n) { /*偶数项初始往左边偏移100%*/
+        transform: translate3d(-100%, 0, 0);
+    }
+
+    .demo-nav li:hover ul {
+        overflow: visible;
+    }
+
+    .demo-nav li:hover ul li { /*透明度和互动同时进行*/
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+
+    /**************************** 延时操作 *******************************/
+    .demo-nav li ul li:nth-of-type(2) {
+        transition-delay: .1s;
+    }
+
+    .demo-nav li ul li:nth-of-type(3) {
+        transition-delay: .15s;
+    }
+
+    .demo-nav li ul li:nth-of-type(4) {
+        transition-delay: .2s;
+    }
+
+    .demo-nav li ul li:nth-of-type(5) {
+        transition-delay: .25s;
+    }
+
+    .demo-nav li ul li:nth-of-type(6) {
+        transition-delay: .3s;
+    }
+
+    .demo-nav li ul li:nth-of-type(7) {
+        transition-delay: .35s;
+    }
+
+    .demo-nav li ul li:nth-of-type(8) {
+        transition-delay: .4s;
+    }
+
+    .demo-nav li ul li:nth-of-type(9) {
+        transition-delay: .45s;
+    }
+
+    .demo-nav li ul li:nth-of-type(10) {
+        transition-delay: .9s;
+    }
+    .demo-nav li ul li:nth-of-type(11) {
+        transition-delay: 1s;
+    }
+    .demo-nav li ul li:nth-of-type(12) {
+        transition-delay: 1.1s;
+    }
+</style>
+
+<body>
+<div class="demo-nav">
+    <ul class="menu">
+        <li>1
+            <ul class="sub-menu">
+                <li>11</li>
+                <li>12</li>
+                <li>13</li>
+                <li>14</li>
+            </ul>
+        </li>
+        <li>2
+            <ul class="sub-menu">
+                <li>21</li>
+                <li>22</li>
+                <li>23</li>
+                <li>24</li>
+                <li>21</li>
+                <li>22</li>
+                <li>23</li>
+                <li>24</li>
+                <li>21</li>
+                <li>22</li>
+                <li>23</li>
+                <li>24</li>
+            </ul>
+        </li>
+        <li>3
+            <ul class="sub-menu">
+                <li>31</li>
+                <li>32</li>
+                <li>33</li>
+                <li>34</li>
+            </ul>
+        </li>
+        <li>4
+            <ul class="sub-menu">
+                <li>41</li>
+                <li>42</li>
+                <li>43</li>
+            </ul>
+        </li>
+        <li>5</li>
+    </ul>
+    <div class="clear"></div>
+</div>
+</body>
+</html>

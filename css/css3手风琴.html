@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0
+    }
+
+    .demo-slide-tab ul {
+        width: 200px;
+    }
+
+    .demo-slide-tab li {
+        /*
+        按顺序设置如下属性：
+        list-style-type
+        list-style-position
+        list-style-image
+        */
+        overflow: hidden;
+        display: block;
+        width: 100%;
+        /*初始化高度，对应下面的h3高度*/
+        height: 40px;
+        list-style: none outside none;
+        transition: height 0.3s ease-in-out;
+    }
+
+    .demo-slide-tab h3 {
+        position: relative;
+        padding: 10px;
+        height: 20px;
+        background: linear-gradient(#0099ff, #71d1fd);
+        cursor: pointer;
+    }
+
+    /*实现三角形*/
+    .demo-slide-tab h3:before {
+        content: "";
+        position: absolute;
+        right: 10px;
+        top: 15px;
+        width: 0;
+        height: 0;
+        border: 10px solid transparent;
+        border-left-color: #000;
+    }
+
+    .demo-slide-tab li:hover {
+        height: 280px;
+    }
+
+    .demo-slide-tab li:hover h3 {
+        color: #fff;
+        background: linear-gradient(#faa305, #fcc054); /*渐变*/
+    }
+
+    .demo-slide-tab li:hover h3:before {
+        border-left-color: #fff;
+        transform: rotate(90deg);
+    }
+
+    .demo-slide-tab div {
+        max-height: 220px;
+    }
+
+</style>
+
+<body>
+<div class="demo-slide-tab">
+    <ul>
+        <li>
+            <h3>title 1</h3>
+            <div>content1</div>
+        </li>
+        <li>
+            <h3>title 2</h3>
+            <div>content2conte nt2content2content2content2conten t2content2content2content2content2conte
+                nt2content2content2content2conte nt2content2content2content2 content2content2content
+                2content2content2content2content2conten t2content2c ontent2content2content2
+            </div>
+        </li>
+        <li>
+            <h3>title 3</h3>
+            <div>content3</div>
+        </li>
+        <li>
+            <h3>title 4</h3>
+            <div>content4.</div>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
