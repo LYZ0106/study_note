@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="wrap">
+    <input v-model="model" type="text"><br>
+    <span>{{text}}</span><br>
+    <span>{{child.str}}</span><br>
+    我是双向绑定-----<span>{{model}}</span>
+</div>
+
+<script src="mvvm.js"></script>
+<script>
+
+  var vm = new MVVM({
+    el: '#wrap',
+    data: {
+      text: '我是text初始值文本，由js生产',
+      model: 'ii',
+      child: {
+        str: '我是子元素'
+      }
+    }
+  })
+
+  console.log(vm)
+
+</script>
+</body>
+</html>
