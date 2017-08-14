@@ -4,30 +4,41 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+
 <body>
 <div id="wrap">
-    <input v-model="model" type="text"><br>
-    <span>{{text}}</span><br>
-    <span>{{child.str}}</span><br>
-    我是双向绑定-----<span>{{model}}</span>
+    <input type="text" v-model="modelStr">
+    <p v-class="className" class="abc">{{modelStr}}
+        <span v-text="child.someStr"></span>
+    </p>
+    <p v-html="htmlStr"></p>
+    <button v-on:click="clear">清空</button>
 </div>
 
 <script src="mvvm.js"></script>
 <script>
-
-  var vm = new MVVM({
+  let vm = new MVVM({
     el: '#wrap',
     data: {
-      text: '我是text初始值文本，由js生产',
-      model: 'ii',
+      modelStr: '',
+      className: 'btn',
+      htmlStr: '<span style="color: red;">red</span>',
       child: {
-        str: '我是子元素'
+        someStr: '初始值'
+      }
+    },
+
+    methods: {
+      clear() {
+        this.modelStr = null
+        this.child.someStr = null
       }
     }
   })
 
-  console.log(vm)
-
+  vm.$watch('child.someStr', function () {
+    console.log(arguments)
+  })
 </script>
 </body>
 </html>
