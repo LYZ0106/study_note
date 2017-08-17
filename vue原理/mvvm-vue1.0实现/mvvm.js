@@ -2,9 +2,9 @@
   window.MVVM = factory()
 }(function () {
 
-  /************************  监听  ****************************/
+  /************************  属性劫持  ****************************/
     // observe使data变成发布者，watcher是订阅者，订阅data的变化。
-  const observe = (data, vm) => {
+  const observe = (data, vm) =>  {
       if (!data || typeof data !== 'object') return
       return new Observer(data)
     }
@@ -25,18 +25,17 @@
       let childObj = observe(val);   // 递归监听子属性
 
       Object.defineProperty(obj, prop, {
-        configurable: false,
+        configurable: true,
         enumerable: true,
         get () {
-          // 添加watcher，通过Dep定义全局target属性，暂存watcher, 添加完移除
-          Dep.target && Dep.target.addDep(dep);
+          Dep.target && Dep.target.addDep(dep);  // 添加订阅着watcher到订阅器列表subs
           return val
         },
         set (newVal) {
           if (newVal === val) return
           val = newVal;
           childObj = observe(newVal);
-          dep.notify()        // 这里相当于发布者，将变化通知订阅者 watcher
+          dep.notify() // 这里相当于发布者，将变化通知订阅者 watcher
         }
       })
     }
@@ -52,8 +51,8 @@
       this.subs = []
     }
 
-    addSub(data) {
-      this.subs.push(data)
+    addSub(sub) {
+      this.subs.push(sub)
     }
 
     notify() { // 数据变化后通知订阅者
@@ -214,9 +213,9 @@
     }
 
     get () {
-      Dep.target = this;             // 将当前订阅者指向自己, 对应Dep.target.addDep(dep);
-      let value = this.getVmValue()  // 触发属性的getter，添加订阅者
-      Dep.target = null
+      Dep.target = this // 通过Dep定义全局target属性，暂存watcher将订阅者指向自己, 对应Dep.target.addDep(dep);
+      let value = this.getVmValue()
+      Dep.target = null // 该个订阅者获值后立即解除绑定
       return value
     }
 
@@ -228,7 +227,7 @@
       }
     }
 
-    addDep(dep) {
+    addDep(dep) { // 触发属性的getter，添加订阅者
       if (!this.depIds.hasOwnProperty(dep.uid)) {
         dep.addSub(this)
         this.depIds[dep.uid] = dep
@@ -265,7 +264,7 @@
     _proxy(key) {
       let vm = this
       Object.defineProperty(vm, key, {
-        configurable: false,
+        configurable: true,
         enumerable: true,
         get () {
           return vm._data[key]

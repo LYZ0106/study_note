@@ -7,7 +7,12 @@
 
 <body>
 <div id="wrap">
+    <input type="text" v-model="modelStr1">
+    <input type="text" v-model="modelStr2">
     <input type="text" v-model="modelStr">
+
+    <p v-class="className" class="abc">{{modelStr2}}</p>
+    <p v-class="className" class="abc">{{modelStr1}}</p>
     <p v-class="className" class="abc">{{modelStr}}
         <span v-text="child.someStr"></span>
     </p>
@@ -21,6 +26,8 @@
     el: '#wrap',
     data: {
       modelStr: '',
+      modelStr1: '',
+      modelStr2: '',
       className: 'btn',
       htmlStr: '<span style="color: red;">red</span>',
       child: {

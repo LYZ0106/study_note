@@ -17,6 +17,7 @@ var f = new F
 console.log("-------------- 实例f的构造器是 F ----------------");
 console.log(f.constructor === F);
 console.log(f.__proto__===F.prototype);
+console.log(F.hasOwnProperty('constructor'));
 console.log(" ");
 
 /*

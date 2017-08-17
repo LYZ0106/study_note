@@ -19,7 +19,7 @@ class LazyMan {
     this._showName()
   }
 
-  // 核心：将队列中的事件取出来执行
+  // 核心：将队列中的事件取出来执行 ，有点像订阅发布模式
   next() {
     let fn = this.task.shift()
     fn && fn()
@@ -31,9 +31,7 @@ class LazyMan {
       this.next() // 执行队列的下一个任务
     }
     this.task.push(fn)
-    setTimeout(() => { // 必须！！！ 执行队列的第一个任务
-      this.next() // todo
-    }, 0)
+    setTimeout(() => this.next(), 0) // 注意！！！ 放入任务队列中等待执行
   }
 
   eat(food) {
