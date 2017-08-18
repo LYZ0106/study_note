@@ -40,14 +40,64 @@ function add(n) {
   n = n + 1;
   // return n  函数应该有返回值
 }
+
 y = add(x);
 
 function add(n) {
   n = n + 3;
 }
+
 z = add(x);
 
 
 /*----------------------------------------------------------------------*/
+// 避免重写可能已经定义了的方法。通过在定义自己的方法之前，检测方法是否已经存在。
+String.prototype.repeatify = String.prototype.repeatify || function (num) {
+  let result = ''
+  for (let i = 0; i < num; i++) {
+    result += this
+  }
+  return result
+}
+
+console.log('hello'.repeatify(3)); // 实现这样
+
+// 或者
+function repeatStringNumTimes(string, times) {
+  return times > 0 ? string.repeat(times) : "";
+}
 
 
+/*----------------------------------------------------------------------*/
+
+/*假设：一个英文字符占用一个字节，一个中文字符占用两个字节*/
+function getBytes(str) {
+  let len = 0
+
+  for (let i = 0; i < str.length; i++) {
+    if (str.charCodeAt(i) > 255) {
+      len += 2
+    } else {
+      len += 1
+    }
+  }
+  return len
+}
+
+getBytes("玩as778")
+
+
+/*-------------------------------------------------------------------*/
+var y = 1, x = y = typeof x;
+/*
+ 执行栈解释：
+ 入栈：    x=y,  y=typeof x,
+ 出栈执行：y=typeof,  x=y
+
+相当于：
+var y = 1;
+y = typeof x;
+var x = y;
+
+* */
+console.log(x)

@@ -1,0 +1,28 @@
+/*
+1、wrap-outer指的是居中定宽主体的父级
+2、calc是CSS3中的计算，IE10+浏览器支持，IE9浏览器基本支持(不能用在background-position上)；
+3、100vw相对于浏览器的window.innerWidth，是浏览器的内部宽度，
+注意，滚动条宽度也计算在内！而100%是可用宽度，是不含滚动条的宽度。
+4、calc(100vw - 100%)就是浏览器滚动条的宽度大小（如果有，如果没有滚动条则是0）！
+左右都有一个滚动条宽度（或都是0）被占用，主体内容就可以永远居中浏览器啦，从而没有任何跳动！
+
+*/
+
+
+html {
+    overflow-y: scroll; /*高度不确定*/
+}
+
+:root {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+:root body {
+    position: absolute;
+}
+
+body {
+    width: 100vw;
+    overflow: hidden;
+}
