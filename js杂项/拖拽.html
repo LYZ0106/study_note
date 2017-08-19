@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>拖拽</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .clearfix:after {
+            display: block;
+            content: '.';
+            visibility: hidden;
+            height: 0;
+            clear: both;
+            font-size: 0;
+        }
+
+        .clearfix {
+            *zoom: 1; /*兼容IE6、IE7、IE8浏览器清除浮动*/
+        }
+
+        #dialog {
+            height: 200px;
+            width: 400px;
+            background-color: #EAF6DB;
+            border: 1px solid lightslategray;
+            position: absolute; /*一定要绝对定位*/
+        }
+
+        .dialog-title {
+            height: 40px;
+            line-height: 40px;
+            background-color: #3a3333;
+            cursor: move;
+        }
+    </style>
+</head>
+
+<body>
+<div id="dialog">
+    <div id="dialog-title" class="dialog-title clearfix"></div>
+</div>
+</body>
+
+<script>
+  /*
+  * Event接口表示在DOM中发生的任何事件; 事件本身包含所有事件通用的属性和方法。
+  * 事件有：用户生成（鼠标,键盘事件），API生成(指示动画已经完成运行的事件，视频已被暂停...)
+  * 有许多类型的事件，其中一些使用基于主要事件接口的其他接口。
+
+  访问事件接口
+  事件回调可以被绑定到包括DOM元素、文档、窗口 等多种对象上。
+  当一个事件被触发时，一个event对象将被创建,并顺序的传递给事件监听者们。
+  Event 接口可以在回调函数内被访问到，通过被传递进来做为第一个参数的事件对象。
+
+
+clientHeight
+认为是元素可视区域的高度，也就是说元素或窗口中可以看到内容的这个区域的高度，
+即然是指可看到内容的区域，滚动条不算在内。但要注意padding是算在内。
+其计算方式为clientHeight = topPadding + bottomPadding+ height - 水平滚动条高度。
+
+offsetHeight
+在IE6，IE7，IE8， IE9以及最新的的FF, Chrome中，对于一般元素，
+都是offsetHeight = padding + height + border = clientHeight + 滚动条 + 边框。
+
+scrollHeight
+scrollHeight的争议比较大，有些浏览器认为scrollHeight可以小于clientHeight，
+有些认为scrollHeight至少应该等于clientHeight。
+但有一点是一样的: scrollHeight >= topPadding + bottomPadding + 内容margin box的高度。
+
+在浏览器中的区别在于：
+IE6、IE7 认为scrollHeight 是内容高度，可以小于clientHeight。
+FF 认为scrollHeight 是内容高度，不过最小值是clientHeight。
+
+注：body和documentElement的clientHeight, offsetHeight和scrollHeight在各个浏览器中的计算方式又不同。
+在所有的浏览器中，获取视窗可见部分的高度，应该使用documentElement.clientHeight，
+因为body.clientHeight是由它的内容决定的。
+  * */
+
+  let oDialog_title = document.getElementById('dialog-title');  // 允许点击鼠标获取拖拽事件区域
+  let oDialog = oDialog_title.parentNode;
+  let iDisX = 0;
+  let iDisY = 0;
+
+  function mousedownEvent(e) {
+    // 将事件对象 e 传递给事件回调函数，同时可以在这个回调函数中使用。
+    iDisX = e.clientX - oDialog.offsetLeft;
+    iDisY = e.clientY - oDialog.offsetTop;
+  }
+
+  function mousemoveEvent(e) {
+    let moveX = e.clientX - iDisX
+    let moveY = e.clientY - iDisY
+    let maxMoveX = document.documentElement.clientWidth - oDialog.offsetWidth
+    let maxMoveY = document.documentElement.clientHeight - oDialog.offsetHeight
+
+    if (moveX < 0) {
+      moveX = 0
+    } else if (moveX > maxMoveX) {
+      moveX = maxMoveX
+    }
+
+    if (moveY < 0) {
+      moveY = 0
+    } else if (moveY > maxMoveY) {
+      moveY = maxMoveY
+    }
+
+    oDialog.style.left = moveX + 'px';
+    oDialog.style.top = moveY + 'px';
+  }
+
+  function mouseupEvent() { // 清除移动事件及本身
+    document.onmousemove = null;
+    document.onmouseup = null;
+  }
+
+
+  let down = function () {
+    oDialog_title.addEventListener('mousedown', mousedownEvent, false)
+    console.log('down')
+  }
+
+
+  let move = function () {
+    document.addEventListener('mousemove', mousemoveEvent, false)
+    console.log('move')
+  }
+
+  async function init() {
+    await  down()
+    await move()
+  }
+
+  init().then(() => {
+    console.log('then')
+    mouseupEvent()
+  })
+
+  // todo 如何对事件进行流程控制，事件监听后的回调
+</script>
+</html>

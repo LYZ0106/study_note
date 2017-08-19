@@ -120,7 +120,8 @@ Function.prototype.uncurrying = function () {
   return this.call.bind(this);
 };
 
-// 把属于数组原型对象的函数转化为一个普通的函数，实现相同的功能。比如说，实现一个slice()函数：
+// 把属于数组原型对象的函数转化为一个普通的函数，实现相同的功能。
+// 比如说，实现一个slice()函数：
 var slice = Array.prototype.slice.uncurrying();
 var a = [1, 2, 3];
 console.log(slice(a, 1));  // [2,3]

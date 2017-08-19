@@ -90,14 +90,47 @@ getBytes("玩as778")
 /*-------------------------------------------------------------------*/
 var y = 1, x = y = typeof x;
 /*
- 执行栈解释：
- 入栈：    x=y,  y=typeof x,
- 出栈执行：y=typeof,  x=y
-
-相当于：
-var y = 1;
-y = typeof x;
-var x = y;
-
+ 运算符 = 是左值运算符，从右往左读取， 相当于：
+ var y = 1;
+ y = typeof x;
+ var x = y;
 * */
 console.log(x)
+
+
+/*-----------------------------------------------------------*/
+var foo = {
+  bar: function () {
+    return this.baz
+  },
+  baz: 1
+};
+
+var ret = (function () {
+  // 拿到参数foo.bar，并执行 return this.baz，但此时的上下文环境是arguments
+  return typeof arguments[0]()
+})(foo.bar); // 传递的是参数
+
+console.log(ret)
+
+
+
+/*---------------------------------------------------------------------*/
+/*
+ * 注意返回类型
+ * x = [,][1]； 取 x = typeof y = ‘undefind’ 是字符串类型
+ * typeof 返回的是string类型 ，typeof typeof是’string’
+ */
+
+var x = [typeof x, typeof y][1];
+//type是从有往左读取
+typeof typeof x;   // => string
+
+
+/*--------------------------------------------------------------*/
+(function (foo) {
+  return typeof foo.bar;
+})({foo: {bar: 1}});
+
+//参数foo={foo: {bar: 1}}
+//typeof foo.bar
