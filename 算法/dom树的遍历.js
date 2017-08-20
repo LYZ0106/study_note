@@ -21,9 +21,10 @@ walkDom(document, function (node) {  //包含document节点
   console.count()
 })
 
-
 //数量比上面输出的少1，因为不包含document节点
 document.querySelectorAll('*').length
+
+
 
 /*----------------------------------------------------*/
 

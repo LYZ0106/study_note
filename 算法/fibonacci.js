@@ -12,9 +12,8 @@ function fibonacci(num) {
   let middle = 1;
   let next = 1;
   let arr = [];
-  if (num === 1) {
-    return arr = [0, 1, 1]
-  }
+
+  if (num === 1) return arr = [0, 1, 1]
 
   for (let i = 2; i < num; i++) {
     if (next <= num) {
@@ -31,11 +30,12 @@ function fibonacci(num) {
 // 0、1、1、2、3、5、8、
 console.log(fibonacci(2))  // 55
 
+
 /*-----------------------------------------------------------------------*/
 // 递归实现
 function fn(x) {
-  //这里是退出递归的条件, 以保证在有限次递归后能够得到结果
-  if (x === 0 || x === 1) return 1;
-
+  if (x === 0 || x === 1) return 1; //退出递归的条件, 以保证在有限次递归后能够得到结果
   return fn(x - 1) + fn(x - 2);    //转化为更为基本的情况, 重复调用自身进行计算
 }
+
+console.log(fn(5))
