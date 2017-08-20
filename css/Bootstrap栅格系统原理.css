@@ -1,0 +1,78 @@
+/*实现列组合方式非常简单，只涉及两个CSS两个特性：浮动与宽度百分比。*/
+
+/* 确保所有列左浮动 */
+.col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
+    float: left;
+}
+
+/* 定义每个列组合的宽度（使用的百分比） */
+.col-md-12 {
+    width: 100%;
+}
+
+.col-md-11 {
+    width: 91.66666667%;
+}
+
+.col-md-10 {
+    width: 83.33333333%;
+}
+
+.col-md-9 {
+    width: 75%;
+}
+
+.col-md-8 {
+    width: 66.66666667%;
+}
+
+.col-md-7 {
+    width: 58.33333333%;
+}
+
+.col-md-6 {
+    width: 50%;
+}
+
+.col-md-5 {
+    width: 41.66666667%;
+}
+
+.col-md-4 {
+    width: 33.33333333%;
+}
+
+.col-md-3 {
+    width: 25%;
+}
+
+.col-md-2 {
+    width: 16.66666667%;
+}
+
+.col-md-1 {
+    width: 8.33333333%;
+}
+
+/*------------------------------------------------------*/
+/*列偏移*/
+.col-md-offset-12 {
+    margin-left: 100%;
+}
+
+.col-md-offset-11 {
+    margin-left: 91.66666667%;
+}
+
+.col-md-offset-10 {
+    margin-left: 83.33333333%;
+}
+
+/*列排序*/
+.col-md-push-8 {
+    left: 66.66666667%;
+}
+
+.col-md-pull-4 {
+    right: 33.33333333%;
+}

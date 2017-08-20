@@ -1,0 +1,11 @@
+getComputedStyle与style的区别
+
+1、只读与可写
+正如上面提到的getComputedStyle方法是只读的，只能获取样式，不能设置；而element.style能读能写，能屈能伸。
+2、获取的对象范围
+getComputedStyle方法获取的是最终应用在元素上的所有CSS属性对象（即使没有CSS代码，
+也会把默认的祖宗八代都显示出来）；
+而element.style只能获取元素style属性中的CSS样式。
+
+
+
