@@ -21,19 +21,10 @@
 /*
 * @param url 跨域请求的地址
 * @param data 请求参数
-* @param opts 设置回调函数的名称
+* @param opts 设置回调函数的名称 todo
 * */
 
 // jsonp(url, data, opts)
-
-/*
-* 重置回调函数getHotSongList 的名称
-export const getHotSongListCbName = {
-  param: 'jsonpCallback',
-  name: 'playlistinfoCallback'
-}
-* */
-
 
 let jsonp = function (url, data) {
   let script = document.createElement('script')
@@ -43,7 +34,6 @@ let jsonp = function (url, data) {
   script.onload = function () {
     document.body.removeChild(script);
   };
-
 
   // url上附带请求参数
   url += (url.indexOf('?') < 0 ? '?' : '&') + param(data)

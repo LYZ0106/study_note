@@ -67,4 +67,17 @@ console.log("array 2: length=" + arr2.length + " last=" + arr2.slice(-1));
 
 
 
+/*-----------------------------------------------------------------------*/
+//请问下面哪种方式可以在不改变原来数组的情况下，拷贝出数组b, 且满足b !== a。
+// 例如数组
+let a=[1, 2, 3]
+let b = a; // 值相同
+let b1 = a.slice();   //  返回新数组对象 内存地址不同
+let b2 = a.concat();  // 返回一个新数组。
+
+console.log(b===a)
+console.log(b1===a)
+console.log(b2===a)
+
+
 
