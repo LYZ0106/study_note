@@ -7,7 +7,7 @@
  */
 /************************** 浅复制 ***********************************/
 //方法用于将所有可枚举的属性的值从一个或多个源对象复制到目标对象。
-// 它将返回目标对象。拷贝的是属性值。
+// 它将返回目标对象。拷贝的是 属性值。 原始值会被隐式转换成其包装对象
 //Object.assign()
 
 Array.prototype.slice()
@@ -20,27 +20,21 @@ Array.prototype.slice()
 
   //1,新开辟内存地址，2,递归复制。但无法解决内部循环引用的问题
 const animal = {
-    dog: { //对于非基本类型的变量，则递归至基本类型变量后，再复制
-      bigDog: ['jack', 'jerry'],  // 按引用传递，共用地址
-      smallDog: 'ben'
-    },
-
-    cat: 'tom', // 按值传递，不共用地址
-
+    dog: {bigDog: ['jack', 'jerry'], smallDog: 'ben'},
+    cat: 'tom',
     mouse: ['a', ['aa', 'bb'], 'c'],
-
     // 上层业务，更多的是完成业务功能，并不需要真正将函数深拷贝。
-    tiger: function () {
-      console.log('eat ... ')
-    }
+    tiger: () => console.log('eat ... ')
   };
 
-function extent(obj, copy) {
-  copy = copy || {};
+function extent(obj) {
+  let copy = {};
   for (let i in obj) {
-    if (typeof obj[i] === "object") { // 返回的object有可能是数组对象，对象
+    if (obj.hasOwnProperty(i) && typeof obj[i] === "object") {
+      // 返回： 1、数组对象，  2、对象
+      // 将其递归至基本类型的变量，再复制
       copy[i] = (Object.prototype.toString.call(obj[i]) === '[object Array]') ? [] : {}
-      extent(obj[i], copy[i])
+      copy[i] = extent(obj[i])
     } else {
       copy[i] = obj[i]
     }
@@ -48,13 +42,46 @@ function extent(obj, copy) {
   return copy
 }
 
-var ret = extent(animal)
+let ret = extent(animal)
 
 ret.dog.bigDog = '改变'
 ret.cat = '改变'
 ret.mouse[1] = '改变'
-ret.tiger = function () {
-  console.log('改变')
-}
+ret.tiger = () => console.log('改变')
+
 console.dir(animal)
 console.dir(ret)
+
+/*-----------------------------------------------------------*/
+function clone(obj) {
+  let copy;
+
+  if (null === obj || typeof obj !== "object") return obj;
+
+  // Handle Date todo
+  if (obj instanceof Date) {
+    copy = new Date();
+    copy.setTime(obj.getTime());
+    return copy;
+  }
+
+  // 先判断是否为多层的数组对象，必须在object的前面
+  if (obj instanceof Array) {
+    copy = [];
+    for (let i = 0, len = obj.length; i < len; i++) {
+      copy[i] = clone(obj[i]);
+    }
+    return copy;
+  }
+
+  // Handle Object
+  if (obj instanceof Object) {
+    copy = {};
+    for (let attr in obj) {
+      if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);
+    }
+    return copy;
+  }
+
+  throw new Error("Unable to copy obj! Its type isn't supported.");
+}

@@ -4,7 +4,7 @@
 
   /************************  属性劫持  ****************************/
     // observe使data变成发布者，watcher是订阅者，订阅data的变化。
-  const observe = (data, vm) =>  {
+  const observe = (data, vm) => {
       if (!data || typeof data !== 'object') return
       return new Observer(data)
     }
@@ -27,11 +27,11 @@
       Object.defineProperty(obj, prop, {
         configurable: true,
         enumerable: true,
-        get () {
-          Dep.target && Dep.target.addDep(dep);  // 添加订阅着watcher到订阅器列表subs
+        get() {
+          Dep.target && Dep.target.addDep(dep);  // 添加订阅者watcher到订阅器列表subs
           return val
         },
-        set (newVal) {
+        set(newVal) {
           if (newVal === val) return
           val = newVal;
           childObj = observe(newVal);
@@ -91,7 +91,7 @@
     bind(node, vm, exp, dir) {
       let updaterFn = updater[dir];
       updaterFn && updaterFn(node, this._getVmVal(vm, exp)); // 初始化视图
-
+      // 模板编译过程中的指令和数据绑定都会生成 Watcher 实例
       new Watcher(vm, exp, (val, oldVal) => { // 在对应的属性消息订阅器中, 添加该订阅
         updaterFn && updaterFn(node, val, oldVal);
       })
@@ -167,8 +167,7 @@
 
     compile(node) {
       let nodeAttrs = node.attributes
-      Array.prototype.slice.call(nodeAttrs).forEach(attr => { //遍历元素节点中的属性
-
+      Array.from(nodeAttrs).forEach(attr => { //遍历元素节点中的属性
         if (this._isDirective(attr.name)) { // 判断指令 v- 开头
           let dir = attr.name.substring(2);
           let exp = attr.value;
@@ -192,13 +191,8 @@
       return fragment
     }
 
-    _isDirective(attr) {
-      return /^v-.*/.test(attr)
-    }
-
-    _isEventDirective(dir) {
-      return /^on.*/.test(dir)
-    }
+    _isDirective = attr => /^v-.*/.test(attr)
+    _isEventDirective = dir => /^on.*/.test(dir)
   }
 
 
@@ -212,8 +206,10 @@
       this.value = this.get();
     }
 
-    get () {
-      Dep.target = this // 通过Dep定义全局target属性，暂存watcher将订阅者指向自己, 对应Dep.target.addDep(dep);
+    get() {
+      // 通过Dep定义全局target属性，暂存watcher将订阅者指向实例自己（被编译的指令）,
+      // 对应Dep.target.addDep(dep);
+      Dep.target = this
       let value = this.getVmValue()
       Dep.target = null // 该个订阅者获值后立即解除绑定
       return value
@@ -266,10 +262,10 @@
       Object.defineProperty(vm, key, {
         configurable: true,
         enumerable: true,
-        get () {
+        get() {
           return vm._data[key]
         },
-        set (newVal) {
+        set(newVal) {
           vm._data[key] = newVal
         }
       })
