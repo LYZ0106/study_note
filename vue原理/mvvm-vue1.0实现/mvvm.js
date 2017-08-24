@@ -156,11 +156,11 @@
       childNodes.forEach(node => {
         if (node.nodeType === 1) { //编译属性，指令
           this.compile(node)
-        } else if (node.nodeType === 3 && reg.test(node.textContent)) { //编译变量
-          compileUtil.text(node, this.$vm, RegExp.$1)
+        } else if (node.nodeType === 3 && reg.test(node.textContent)) {
+          compileUtil.text(node, this.$vm, RegExp.$1) //编译变量
         }
-        if (node.childNodes && node.childNodes.length) { // 遍历编译子节点
-          this.compileElement(node)
+        if (node.childNodes && node.childNodes.length) {
+          this.compileElement(node) // 遍历编译子节点
         }
       })
     }
@@ -191,8 +191,13 @@
       return fragment
     }
 
-    _isDirective = attr => /^v-.*/.test(attr)
-    _isEventDirective = dir => /^on.*/.test(dir)
+    _isDirective(attr) {
+      return /^v-.*/.test(attr)
+    }
+
+    _isEventDirective(dir) {
+      return /^on.*/.test(dir)
+    }
   }
 
 
@@ -203,7 +208,7 @@
       this.exp = exp;
       this.cb = cb;
       this.depIds = {};  // 这个必须在前面申明
-      this.value = this.get();
+      this.value = this.get(); // 一旦实例化后，取到vm._data的值
     }
 
     get() {

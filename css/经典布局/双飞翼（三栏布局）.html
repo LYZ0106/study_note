@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /* 利用定位与浮动 */
+
+        .content {
+            overflow: hidden; /* 触发BFC闭合浮动 */
+            padding: 0 200px 0 200px; /* 修复内容覆盖问题 */
+        }
+
+        .l-aside, .main, .r-aside {
+            position: relative;
+            float: left;
+            min-height: 300px;
+        }
+
+        .l-aside {
+            width: 200px;
+            left: -200px; /* 为了修复覆盖问题---左*/
+            margin-left: -100%; /* 关键地方 左移一整行*/
+            background-color: #39d4a2;
+            border: 1px solid grey;
+            box-sizing: border-box; /* 解决边框问题 */
+        }
+
+        .r-aside {
+            width: 200px;
+            right: -200px; /* 为了修复覆盖问题---右*/
+            margin-left: -200px; /* 关键地方 */
+            background-color: #d42fab;
+            border: 1px solid grey;
+            box-sizing: border-box;
+        }
+
+        .main {
+            width: 100%;
+            background-color: #0b8bd4;
+            border: 1px solid #9d1916;
+            box-sizing: border-box;
+        }
+
+        .footer {
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+<div class="header">header</div>
+<div class="content">
+    <div class="main">
+        <div class="main-inner">
+            自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应
+        </div>
+    </div>
+    <div class="l-aside">左定宽</div>
+    <div class="r-aside">右定宽</div>
+</div>
+<div class="footer">footer</div>
+</body>
+</html>
