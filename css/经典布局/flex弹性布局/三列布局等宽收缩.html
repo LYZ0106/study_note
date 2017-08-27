@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .contain {
+            display: -webkit-flex;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            align-items: stretch;
+            align-content: flex-start;
+        }
+
+        .contain > div {
+            height: 200px;
+            flex: 1; /*等宽 */
+            border: 1px solid #fff;
+            background: #cdaaa3;
+        }
+
+    </style>
+</head>
+<body>
+<div class="contain">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+</div>
+</body>
+</html>

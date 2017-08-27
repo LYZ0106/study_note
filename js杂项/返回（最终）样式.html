@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box{
+            width: 100px;
+            height: 100px;
+            background-color: #4f960c;
+        }
+    </style>
+</head>
+<body>
+<div class="outer">
+    <div class="inner">
+        <button id="btn"> click</button>
+    </div>
+</div>
+<div class="box">rr</div>
+<div style="width: 200px;height: 600px;background-color: #0b8bd4">dd</div>
+<script>
+  function travers() {
+    let nodes = document.querySelectorAll('*')
+    let result = []
+    Array.from(nodes).map(node => {
+      let _node=document.defaultView.getComputedStyle(node,null)
+      let minWidth=_node.getPropertyValue('width')
+      let minHeight=_node.getPropertyValue('height')
+
+      if (parseInt(minWidth)> 50 &&parseInt(minHeight) > 50) {
+        result.push(node)
+      }
+    })
+    return result
+  }
+
+// offsetWidth=width+padding+border+滚动条
+  function traverse1(){
+    return Array.prototype.filter.call(document.querySelectorAll('body *'), function(node){
+      return node.offsetWidth > 50 && node.offsetHeight > 50;
+    });
+  }
+  console.log(travers())
+
+</script>
+</body>
+</html>
