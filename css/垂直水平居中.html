@@ -23,6 +23,7 @@
         }
 
         /* --3 -- 不知道自己高度和父容器高度, 用绝对定位行 transform*/
+
         .a {
             position: relative;
             width: 100px;
@@ -38,16 +39,7 @@
             background-color: #962283;
         }
 
-        /*--4-- div模拟表格: ***************************************************/
-        .a {
-            height: 300px;
-            display: table; /*表格形式渲染*/
-        }
 
-        .b {
-            display: table-cell; /*表格的单元素格形式渲染*/
-            vertical-align: middle;
-        }
 
         /*--5-- display:inline-block，然后借助另一个元素的高度来实现居中 ************/
         #parent {
@@ -71,17 +63,41 @@
             padding-bottom: 30px;
         }
 
-        /*--7--   flexBox  ****************************************************/
+        /*-- 未知宽高元素水平垂直居中办法 *******************************/
+
+        /*--4-- div模拟表格: 当要被居中的元素是inline或者inline-block元素*/
+        .wrap {
+            height: 300px;
+            display: table; /*表格形式渲染*/
+        }
+
+        .inner {
+            display: table-cell; /*表格的单元素格形式渲染*/
+            vertical-align: middle;
+        }
+
+        /*-- 使用transform--********************/
+        .test {
+            background: #de3168;
+            color: #fff;
+            position: absolute;
+            left:50%;
+            top:50%;
+            -webkit-transform:translate(-50%,-50%);
+            transform:translate(-50%,-50%);
+        }
+
+        /********--7--   flexBox  *********/
         .container {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             justify-content: center;
+            align-items: center;
             height: 300px;
             background-color: #0b8bd4;
         }
 
         p {
-            width: 100px;
             margin: auto;
             background-color: #cfd453;
         }
@@ -111,9 +127,15 @@
 
 
 <div class="container">
-    <p id="p1"> A </p>
+    <p id="p1"> A
+    4444
+    </p>
 </div>
-
-
+<!--
+<div class="test">
+    水平垂直居中<br>
+    两行文字
+</div>
+-->
 </body>
 </html>

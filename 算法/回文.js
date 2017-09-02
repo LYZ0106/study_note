@@ -28,7 +28,7 @@ var ret = getMin(str)
 console.log(ret)
 
 
-/**************************************/
+/***************** 方法2 *********************/
 
 // 偶数的任意字母都可以对称，主要是找出奇数的字母有多少种
 function getMin2(str) {
@@ -45,3 +45,20 @@ function getMin2(str) {
   }
   return count
 }
+
+
+/*--------------------------------------------------------------------------*/
+
+/*------------------------------  判断回文  -----------------------------------*/
+function palindrome(str) {
+  const reg = /[\W_]/g;
+  let _str = str.toLowerCase().replace(reg, '');
+
+  if (_str.length === 0) return true;
+  if (_str[0] !== _str[_str.length - 1]) return false;
+
+  return palindrome(_str.slice(1, _str.length - 1));
+}
+
+var str1 = 'abba'
+console.log(palindrome(str1))

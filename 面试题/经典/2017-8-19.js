@@ -17,8 +17,9 @@ b();  // b is not defined
 
 
 /*-------------------------------------------------------------------------*/
+
 // 如何获取光标的水平位置？
-function getX(e){
+function getX(e) {
   e = e || window.event;
   // 先检查非IE浏览器，在检查IE的位置
   // pageX不属于任何公开的标准.
@@ -27,6 +28,7 @@ function getX(e){
 
 
 /*-------------------------------------------------------------------------*/
+
 // 兼容浏览器的获取指定元素（elem）的样式属性（name）的方法
 function getStyle(elem, name) {
   if (elem.style[name]) {
@@ -61,23 +63,31 @@ console.log("array 2: length=" + arr2.length + " last=" + arr2.slice(-1));
 
 
 /*-------------------------------------------------------------------------*/
-["1","2","3"].map(parseInt) //[1,NaN,NaN]
-//因为 parseInt 需要两个参数(val,radix)，其中 radix 表示解析时用的基数。
-//map 传了3个(element,index,array)，对应的 radix 不合法导致解析失败。
+["1", "2", "3"].map(parseInt) //[1,NaN,NaN]
+
+
+function parseInt(str, radix) {
+  return str+'-'+radix;
+}
+var a=["1", "2", "3"];
+a.map(parseInt);  // ["1-0", "2-1", "3-2"] 不能大于radix
+// parseInt() 函数能解析一个字符串，并返回一个整数，需要两个参数 (val, radix)，
+// radix 要解析的数字的基数。【该值介于 2 ~ 36 之间，并且字符串中的数字不能大于radix才能正确返回数字结果值】;
+// map 传了3个(element,index,array)，对应的 radix 不合法导致解析失败。
 
 
 
 /*-----------------------------------------------------------------------*/
 //请问下面哪种方式可以在不改变原来数组的情况下，拷贝出数组b, 且满足b !== a。
 // 例如数组
-let a=[1, 2, 3]
+let a = [1, 2, 3]
 let b = a; // 值相同
 let b1 = a.slice();   //  返回新数组对象 内存地址不同
 let b2 = a.concat();  // 返回一个新数组。
 
-console.log(b===a)
-console.log(b1===a)
-console.log(b2===a)
+console.log(b === a)
+console.log(b1 === a)
+console.log(b2 === a)
 
 
 

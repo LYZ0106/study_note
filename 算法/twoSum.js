@@ -36,7 +36,7 @@ function twoSum(nums, target) {
 
   for (let i = 0; i < nums.length; i++) {
     let num = nums[i];
-    let index = hash[target - num];
+    let index = hash[target - num];  // hash['4']  hash['2']
 
     if (typeof index !== 'undefined') {//利用key的唯一性
       return [index, i]
@@ -44,7 +44,7 @@ function twoSum(nums, target) {
       // 没有key值时，这里做了两件事：
       // 1、将num作为key
       // 2、我要的结果就是某值在原数组的索引 将i（索引）保存为hsah表中key对应的值
-      hash[num] = i
+      hash[num] = i  // hash['2']=1
     }
   }
 }

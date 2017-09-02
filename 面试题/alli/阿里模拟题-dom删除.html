@@ -112,8 +112,8 @@
         // 每次要跟新，不能缓存，不能放全局
         let deleteBtn = document.querySelectorAll('.user-delete')
         let arr = Array.from(deleteBtn)
-        let index = arr.indexOf(item.target)
-        return itemIndex = index
+        itemIndex = arr.indexOf(item.target)
+        return itemIndex
       }
     },
 

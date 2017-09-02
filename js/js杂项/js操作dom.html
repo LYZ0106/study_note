@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  window.onload = function () {
+    let fragment = document.createDocumentFragment('');
+    let div = document.createElement('div');
+    div.id = 'pdd';
+
+    let p = document.createElement('p');
+    p.className = 'pdd-slogan';
+
+    let textNode = document.createTextNode('我是textNode文本节点的文本')
+    console.log(textNode.nodeName)
+    p.appendChild(textNode);
+    div.appendChild(p);
+    fragment.appendChild(div);
+
+
+    let clone = div.cloneNode(false)
+    clone.id = 'pddClone'
+    clone.textContent = '我是 浅 克隆出来的'
+    fragment.appendChild(clone)
+
+    console.log(div);
+    console.log(div.innerHTML);
+    console.log(div.textContent);// IE9+节点属性
+    document.body.appendChild(fragment)
+  }
+</script>
+</body>
+</html>

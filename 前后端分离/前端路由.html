@@ -49,9 +49,9 @@
   }
 
   route.route('/', changecolor.bind(null, 'skyblue'));
-  route.route('/blue', changecolor.bind(null, 'blue'));
-  route.route('/green', changecolor.bind(null, 'green'));
-  route.route('/color', function () {
+  route.route('blue', changecolor.bind(null, 'blue'));
+  route.route('green', changecolor.bind(null, 'green'));
+  route.route('color', function () {
     let p = document.getElementsByTagName('a');
     [].forEach.call(p, function (item) {
       item.style['color'] = '#' + ((~~(Math.random() * (1 << 24))).toString(16));
