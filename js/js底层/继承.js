@@ -15,15 +15,13 @@ function Son(money) {
 function extend(subClass, superClass) {
   function F() {}
   F.prototype = superClass.prototype
-  var superC = new F() //父类的实例 创造对象
-
+  var superC = new F() //父类的实例    创造对象
 
   // IE9+， Object.create创建父类的实例
   // var superC= Object.create(superClass.prototype)
-
   //函数创建时，已有原型的constructor，对prototype重新赋值时，重新指定constructor属性。
-  superC.constructor = subClass   //增强对象
-  subClass.prototype = superC     //指定对象
+  superC.constructor = subClass    // 增强对象
+  subClass.prototype = superC      // 指定对象
 }
 
 extend(Son, Father)

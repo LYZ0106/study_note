@@ -4,28 +4,45 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
-        /* 利用浮动 */
+        /*
+        圣杯布局和双飞翼布局解决的问题是一样的，就是两边顶宽，中间自适应的三栏布局，
+        中间栏要在放在文档流前面以优先渲染。
+        */
+
+        /*
+        圣杯布局，为了中间div内容不被遮挡，将中间div设置了左右padding-left和padding-right后，
+        将左右两个div用相对布局position: relative并分别配合right和left属性，
+        以便左右两栏div移动后不遮挡中间div。
+        */
+
+        /* 利用相对定位与浮动 */
+        body {
+            min-width: 700px;
+        }
 
         .content {
             overflow: hidden; /* 触发BFC闭合浮动 */
-            min-width: 400px;
+            padding: 0 200px 0 200px; /* 修复内容覆盖问题 */
         }
 
-        .l_aside, .main, .r_aside {
+        .l-aside, .main, .r-aside {
+            position: relative; /*需要设置相对定位*/
             float: left;
             min-height: 300px;
         }
 
-        .l_aside {
+        .l-aside {
             width: 200px;
+            left: -200px; /* 为了修复覆盖问题---左*/
             margin-left: -100%; /* 关键地方 左移一整行*/
             background-color: #39d4a2;
             border: 1px solid grey;
             box-sizing: border-box; /* 解决边框问题 */
         }
 
-        .r_aside {
+        .r-aside {
             width: 200px;
+            right: -200px; /* 为了修复覆盖问题---右*/
             margin-left: -200px; /* 关键地方 */
             background-color: #d42fab;
             border: 1px solid grey;
@@ -38,6 +55,7 @@
             border: 1px solid #9d1916;
             box-sizing: border-box;
         }
+
         .footer {
             clear: both;
         }
@@ -49,8 +67,8 @@
     <div class="main">
         自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应自适应
     </div>
-    <div class="l_aside">左定宽</div>
-    <div class="r_aside">右定宽</div>
+    <div class="l-aside">左定宽</div>
+    <div class="r-aside">右定宽</div>
 </div>
 <div class="footer">footer</div>
 </body>

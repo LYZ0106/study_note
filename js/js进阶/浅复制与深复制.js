@@ -30,11 +30,9 @@ const animal = {
 function extent(obj) {
   let copy = {};
   for (let i in obj) {
-    if (obj.hasOwnProperty(i) && typeof obj[i] === "object") {
-      // 返回： 1、数组对象，  2、对象
-      // 将其递归至基本类型的变量，再复制
+    if (obj.hasOwnProperty(i) && typeof obj[i] === "object") { // 返回：1、数组对象 2、对象
       copy[i] = (Object.prototype.toString.call(obj[i]) === '[object Array]') ? [] : {}
-      copy[i] = extent(obj[i])
+      copy[i] = extent(obj[i]) // 将其递归至基本类型的变量，再复制
     } else {
       copy[i] = obj[i]
     }

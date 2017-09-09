@@ -4,6 +4,7 @@ let b = ['v', 4, 'll']
 let c = {a: 2, "7": 'a'}
 let d = {a: 2, "7": 'a'}
 console.log(a == a) //true
+// 对象比较的是引用，就像它门一模一样也不相等，只有自己与自己相等
 console.log(a == b) //false
 console.log(a === b) //false
 
@@ -63,3 +64,15 @@ console.log(Boolean({})) //true
 
 
 console.log(typeof +false);  //number
+
+
+// 等号运算符（== 和 ===） 不能被用来判断一个值是否是 NaN。
+// 必须使用 Number.isNaN() 或 isNaN() 函数。
+// 在执行自比较之中：NaN，也只有NaN，比较之中不等于它自己。
+console.log(NaN === NaN) //false
+console.log(NaN == NaN)  //false
+
+console.log(null == undefined ) // true
+console.log(null === undefined ) // false
+
+

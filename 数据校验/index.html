@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title></title>
+    <script type="text/javascript" src="jquery-3.2.1.js"></script>
+    <!--
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+    -->
+    <script type="text/javascript" src="myValidator.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <!-- form: -->
+        <section>
+            <div class="col-lg-8 col-lg-offset-2">
+                <div class="page-header">
+                    <h2 class="text-center">注册</h2>
+                </div>
+                <form id="myForm" method="post" class="form-horizontal">
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">用户名</label>
+                        <div class="col-lg-5">
+                            <input type="text" class="form-control" name="username"
+                                   data-zv-required="true" data-zv-required-message="用户名不可为空"
+                                   data-zv-regexp="^[a-zA-Z]\w{5,9}$" data-zv-regexp-message="用户名必须以字母开头，6-10位"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">密码</label>
+                        <div class="col-lg-5">
+                            <input type="password" class="form-control" name="password"
+                                   data-zv-required="true" data-zv-required-message="密码不可为空"
+                                   data-zv-regexp="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[\w!@#$%^&*]{6,16}$"
+                                   data-zv-regexp-message="密码必须为6-16位，且包含大写字母，小写字母和数字"
+                                   data-zv-different="username" data-zv-different-message="密码不可与用户名相同"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">确认密码</label>
+                        <div class="col-lg-5">
+                            <input type="password" class="form-control" name="repassword"
+                                   data-zv-equals="password" data-zv-equals-message="必须与密码相同"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">手机</label>
+                        <div class="col-lg-5">
+                            <input type="text" class="form-control" name="cellphone"
+                                   data-zv-required="true" data-zv-required-message="手机不可为空"
+                                   data-zv-regexp="^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$"
+                                   data-zv-regexp-message="手机号格式错误"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">座机</label>
+                        <div class="col-lg-5">
+                            <input type="text" class="form-control" name="phone"
+                                   data-zv-required="true" data-zv-required-message="座机不可为空"
+                                   data-zv-regexp="^0\d{2,3}-\d{7,8}$" data-zv-regexp-message="座机格式错误"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">邮箱</label>
+                        <div class="col-lg-5">
+                            <input type="text" class="form-control" name="email"
+                                   data-zv-required="true" data-zv-required-message="邮箱不可为空"
+                                   data-zv-regexp="^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+$"
+                                   data-zv-regexp-message="邮箱格式错误"
+                            >
+                        </div>
+                    </div>
+                    <input class="btn btn-primary col-lg-offset-5" type="button" data-zv-submit="true" value="注册"/>
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+  $("#myForm").myValidator({
+    trigger: "input"
+  })
+  $.fn.myValidator.addRules({})
+</script>
+</html>

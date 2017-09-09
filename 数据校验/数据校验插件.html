@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="myValidator.js"></script>
+</head>
+<body>
+<form action="http:// xxx.com/register" id="form" method="post">
+    <label for="">
+        请输入用户名：
+        <input type="text" name="userName"
+               data-dr-regExp="^\w+@\w+\.\w+$"
+               data-dr-required=true
+        />
+    </label>
+    <label for="">
+        请输入密码：
+        <input type="text" name="password"
+               data-dr-regExp-message="请输入密码"
+               data-dr-required=true
+               data-dr-min-length="密码至少为6为"
+               data-dr-required-message='输入密码不能为空'
+        />
+    </label>
+    <label for="">
+        请输入手机号码：
+        <input type="text" name="phoneNumber"
+               data-dr-regExp="^1\d{10}$"
+               data-dr-regExp-message="请输入手机号码"
+               data-dr-required=true
+               data-dr-required-message='输入手机号码不能为空'
+        />
+    </label>
+    <button>提交</button>
+</form>
+<script src="jquery-3.2.1.js"></script>
+<script>
+  /*
+  * 插件自身的作用域与用户当前的作用域相互独立，也就是插件内部的私有变量不能影响使用者的环境变量；
+    插件需具备默认设置参数；
+    插件除了具备已实现的基本功能外，需提供部分API，使用者可以通过该API修改插件功能的默认参数，从而实现用户自定义插件效果；
+    插件需提供监听入口，及针对指定元素进行监听，使得该元素与插件响应达到插件效果；
+    插件支持链式调用。
+  * */
+
+  /*------------------------ 依赖插件 -------------------------*/
+  (function (window, factory, plug) {
+    factory(jQuery, plug)
+  })(this, function (jQuery, plug) {
+    const DEFAULT = { // 默认配置
+      initEvent: 'input',
+      plug: 'dr'
+    }
+
+    const RULE = { // 默认配置
+      'regExp': function (data) {
+        return new RegExp(data).test(this.val())
+      },
+      'required': function (data) {
+        return this.val()
+      },
+      'min-length': function (data) {
+        return this.val().length >= data
+      },
+      'confirm': function (data) {
+        var passElement = $(':password')[0]
+       // return (passElement.value === '' || this.val() !== passElement.value) ? false : true;
+
+      }
+    }
+
+
+    $.fn[plug] = function (options) {
+      if (!this.is('form')) return
+      this.$file = this.find('input')
+      $.extend(this, DEFAULT, options) // 覆盖
+
+      this.$file.on(this.initEvent, function () {
+          var _this = $(this)
+          _this.siblings('p').remove()
+
+          $.each(RULE, function (key, fn) {
+            var $fileName = _this.data(DEFAULT.plug + '-' + key);
+            var $fileMessage = _this.data(DEFAULT.plug + '-' + key + '-message');
+            if ($fileName) {
+              var result = fn.call(_this, $fileName)
+              if (!result) {
+                _this.after('<p style="color: red"> </p>')
+              }
+            }
+          })
+        }
+      )
+    };
+
+    //$.fn[plug].extendResult = function (options) {
+     // $.extend(RULE, options)
+   //   console.log('s')
+  //  }
+  }, 'dataResult')
+</script>
+<script>
+  $('form').dataResult({
+    initEvent: 'blur'
+  })
+</script>
+</body>
+</html>

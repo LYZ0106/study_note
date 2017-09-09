@@ -38,31 +38,27 @@ function curryIt(fn) {
  * 作用:
  * 1 延迟执行某个函数(惰性加载函数)
  * 2 部分求值
+ * 3 固定易变因素。
+ * 柯里化特性决定了它这应用场景。提前把易变因素，传参固定下来，生成一个更明确的应用函数。
+ * 最典型的代表应用，是bind函数用以固定this这个易变对象。
  */
 
 // 特点: 闭包保存参数，函数进行递归
 let curryIt = function (fn) {
   let args = [].slice.call(arguments, 1);
-  let result;
-
-  result = function () {
-    if (arguments.length === 0) { //参数长度为0输出结果, 延迟计算
+  return  function cb() {
+    if (!arguments.length) { //参数长度为0输出结果, 延迟计算
       return fn.apply(this, args)
     } else {
       [].push.apply(args, arguments);
-      return result  // 参数长度未到达到fn的参数 继续调用函数
+      return cb  // 参数长度未到达到fn的参数 继续调用函数
     }
   }
-
-  return result
 }
 
-var fn = function (a, b, c) {
-  return [].reduce.call(arguments, function (a, b) {
-    return a + b
-  })
-  //return a + b + c
-};
+function fn(...arg) {
+  return arg.reduce((a, b) => a * b)
+}
 let ret = curryIt(fn, 1, 1, 1)(1)(2)(3)(7)();
 console.log(ret)
 
