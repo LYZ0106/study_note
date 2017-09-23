@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  (function (window) {
+    // jQuery仅仅为了实现无new构造，在其原型下创建了init方法(仅充当构造器)为其构造实例对象，
+    // init方法的原型和jQuery原型指向了同一个对象（当然就成了循环引用），
+    // 为后续的实例方法和实例插件机制打下基础(如果不指向同一对象写实例插件将会出现$.fn.init.fn.xxxxx这一幕)，
+    // 并修正constructor的指向，使得看起来像是由jQuery构造器构造。
+    var jQuery = function () {
+      return new jQuery.fn.init()  // 桥接模式
+    }
+
+    jQuery.fn = jQuery.prototype = { // 拿到jq实例原型上的引用
+      constructor: jQuery,
+      init: function (selector) {
+      },
+      css: function () {
+      },
+    }
+    // 对象扩展
+    // jQuery.extend是扩展到jquery上,
+    // jQuery.fn.extend扩展到jquery实例上,也就是原型上面的
+    jQuery.extend = jQuery.fn.extend = function () {
+      var len = arguments.length
+      var target = arguments[0] || {}
+      var i = 1
+      var option
+      var name
+
+      if (typeof target !== 'object') {
+        target = {}
+      }
+
+      if (len === i) {
+        target = this
+        --i
+      }
+
+      // 两个参数
+      for (; i < len; i++) {
+        if ((option = arguments[i]) !== null) {
+          for (name in option) {
+            target[name] = option[name]
+          }
+        }
+      }
+
+      return target
+    }
+
+    // 使得jQuery.fn.init构造函数的原型和jQuery原型同时指向同一个对象
+    jQuery.fn.init.prototype = jQuery.fn // todo
+
+    // jQuery在闭包内导出局部变量为window的全局变量，对外暴露出$和jQuery两个关键字
+      window.jQuery = window.$ = jQuery
+  })(this)
+</script>
+
+<script>
+  // 对象扩展 todo
+  var obj1 = {age: 22}
+  var obj2 = {name: 'tom'}
+  var result = $.extend({}, obj1, obj2)
+  console.log(result)
+  $.extend({
+    getName: function () {
+    }
+  })
+
+  console.log($.getName)
+</script>
+</body>
+</html>

@@ -5,6 +5,21 @@
     <title>Title</title>
 </head>
 <body>
+<script>
+  function TemplateEngine(tpl, data) {
+    var reg = /<%([^%>]+)?%>/g
+    var match
+    while ((match = reg.exec(tpl)) !== null) {
+      tpl = tpl.replace(match[0], data[match[1]])
+    }
+    return tpl
+  }
 
+  var template = '<p>Hello, my name is <%name%>. I\'m <%age%> years old.</p>';
+  console.log(TemplateEngine(template, {
+    name: "Krasimir",
+    age: 29
+  }));
+</script>
 </body>
 </html>

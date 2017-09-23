@@ -5,8 +5,8 @@
 * 如果在某一步骤数组为空，则代表找不到。
 * */
 // 递归
-/*
-function binarySearch(arr, target, start, end) {
+
+function binarySearch1(arr, target, start, end) {
   start = start || 0;
   end = end || arr.length - 1
   let mid = parseInt(start + (end - start) / 2)
@@ -14,17 +14,18 @@ function binarySearch(arr, target, start, end) {
   if (target === arr[mid]) {
     return mid
   } else if (target < arr[mid]) {
-    return binarySearch(arr, target, start, mid-1)
+    return binarySearch1(arr, target, start, mid-1)
   }else if( target > arr[mid]){
-    return binarySearch(arr, target, mid+1, end)
+    return binarySearch1(arr, target, mid+1, end)
   }
   return -1
 }
-*/
 
+// 迭代
 function binarySearch(arr, target) {
   let start = 0
   let end = arr.length - 1
+  // 查找元素所处的位置，假如一开始就在中间
   let mid = parseInt(start + (end - start) / 2)
   while (start <= end) {
     if (target === arr[mid]) {

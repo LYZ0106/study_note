@@ -26,6 +26,36 @@ function fibonacci(num) { // 迭代实现
 // 1、1、2、3、5、8、13
 console.log(fibonacci(5))
 
+// 解法2
+function getFibonacci(n) {
+  var fibarr = [];
+  var i = 0;
+  while (i < n) {
+    if (i <= 1) {
+      fibarr.push(i);
+    } else {
+      fibarr.push(fibarr[i - 1] + fibarr[i - 2])
+    }
+    i++;
+  }
+  return fibarr;
+}
+
+
+/*--------- 递归 ------------*/
+function getfib(n) {
+  if (n === 0) return 0;
+  if (n === 1) return 1;
+  if (n > 1) return getfib(n - 1) + getfib(n - 2);
+}
+
+function fibo(len) {
+  var fibo = [];
+  for (var i = 0; i < len; i++) {
+    fibo.push(getfib(i));
+  }
+  return fibo;
+}
 
 
 

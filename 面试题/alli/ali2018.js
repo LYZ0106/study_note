@@ -47,23 +47,18 @@ let data = [
 
 function transformData(data) {
   let relateId;
-  let _data = data
-  let flag = false
 
-  _data.map(function (key) {
-    _data = key.children; //需要递归的子项
-
-    if (flag === true) {
-      if (!key.children.length) relateId = key.id[0]  // todo 如何保存该id
-    }
+  data.map(function (key) {
+    data = key.children; //需要递归的子项
+    transformData(data)
 
     if (key.children.length) {
-      flag = true
-      transformData(_data)
       key['relateId'] = relateId
     }
+    if ( !key.children.length) relateId = key.id // todo 如何保存该id
+    key['relateId'] = relateId
   })
 }
 
 transformData(data)
-console.dir(data)
+console.dir(data[1])

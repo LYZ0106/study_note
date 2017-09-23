@@ -41,7 +41,7 @@ function exce(num) {
 exce(new String('A')) // ERROR
 exce("A") // Case A
 // 利用 valueOf 方法，我们可以将字符串对象转换为其对应的基本字符串。
-var a= new String('A').valueOf()
+var a = new String('A').valueOf()
 
 
 /*---------------------------------------------------------------------*/
@@ -50,6 +50,7 @@ function* range(m, n) {
     yield i;
   }
 }
+
 console.log(...range(1, 10)) // 1 2 3 4 5 6 7 8 9
 
 
@@ -70,4 +71,19 @@ var person = new Person()
 console.log(obj.isPrototypeOf(Person)) // false todo
 console.log(obj.isPrototypeOf(person)) // true todo
 
+/*-------------------------------------------------------------------*/
+function isOdd(num) {
+  return num % 2 === 1
+}
+
+function isEven(num) {
+  return num % 2 === 0
+}
+
+function isSane(num) {
+  return isEven(num) || isOdd(num)
+}
+
+var values = [7, 4, '13', -9, Infinity];
+console.log(values.map(isSane)) // true, true, true, false, false
 
