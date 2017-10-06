@@ -6,22 +6,32 @@
 </head>
 <body>
 <script>
+  /*
+    这三者其实都是等价的，都是指向了jQuery.prototype，
+  * jQuery.prototype，挂载jQuery对象的原型方法；
+    jQuery.fn是jQuery.prototype别名，标注jQuery.prototype的意义且缩短代码书写长度，避免混淆方便使用；
+    jQuery.fn.init.prototype，让jQuery.fn.init这个工厂方法继承jQuery.fn上的原型方法。
+  * */
   (function (window) {
     // jQuery仅仅为了实现无new构造，在其原型下创建了init方法(仅充当构造器)为其构造实例对象，
     // init方法的原型和jQuery原型指向了同一个对象（当然就成了循环引用），
-    // 为后续的实例方法和实例插件机制打下基础(如果不指向同一对象写实例插件将会出现$.fn.init.fn.xxxxx这一幕)，
+    // 为后续的实例方法和实例插件机制打下基础(如果不指向同一对象写实例插件将会出现$.fn.init.fn.xxxxx)，
     // 并修正constructor的指向，使得看起来像是由jQuery构造器构造。
     var jQuery = function () {
       return new jQuery.fn.init()  // 桥接模式
     }
 
-    jQuery.fn = jQuery.prototype = { // 拿到jq实例原型上的引用
+    // jQeury.fn是jQuery.prototype的别名，prototype上挂载的都是jQuery类的公有方法，
+    // 同时也缩减了引用jQuery.prototype时要书写的代码长度。
+    jQuery.fn = jQuery.prototype = {
       constructor: jQuery,
       init: function (selector) {
+        return this;
       },
       css: function () {
       },
     }
+
     // 对象扩展
     // jQuery.extend是扩展到jquery上,
     // jQuery.fn.extend扩展到jquery实例上,也就是原型上面的
@@ -54,10 +64,12 @@
     }
 
     // 使得jQuery.fn.init构造函数的原型和jQuery原型同时指向同一个对象
-    jQuery.fn.init.prototype = jQuery.fn // todo
+    // jQuery.fn.init这个工厂方法完全奏效了，$()返回的每个对象，都拥有独立的内部变量，
+    // 也共享jQuery.fn上的公有方法和属性。
+    jQuery.fn.init.prototype = jQuery.fn
 
     // jQuery在闭包内导出局部变量为window的全局变量，对外暴露出$和jQuery两个关键字
-      window.jQuery = window.$ = jQuery
+    window.jQuery = window.$ = jQuery
   })(this)
 </script>
 
